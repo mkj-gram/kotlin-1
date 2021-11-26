@@ -923,6 +923,17 @@ class StringTest {
         assertCompareResult(GT, s1, s2, ignoreCase = true)
     }
 
+    @Test fun compareToUnicode() {
+        (0 until (1 shl 16))
+            .map { it.toChar().toString() }
+            .zipWithNext()
+            .forEach { (first, second) ->
+                assertTrue(first.compareTo(second) < 0)
+                assertTrue(first.compareTo(first) == 0)
+                assertTrue(second.compareTo(second) == 0)
+                assertTrue(second.compareTo(first) > 0)
+            }
+    }
 
     @Test fun orderIgnoringCase() {
         val list = listOf("Beast", "Ast", "asterisk", "[]")
